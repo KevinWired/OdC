@@ -1,14 +1,13 @@
 /* 	-- Dibujar Linea Horizontal --
 *
 *	-- ARGS -- 
-*	x11=x_0, x12=y, x13=c, x14=color, x
+*	x11=x_0, x12=y, x13=c, x14=color, x15=pintar_pixel, reset_bg=16
 *
 *	-- DESC --
 *	Secuancia de pixeles que se extienden <c veces> hacia la derecha.
 */
 
 dib_linea_h:
-    // -- Args: x11=x_0, x12=y, x13=c, x14=color, drawPixel: setPixel x15:16 //
     SUB SP, SP, #48           // reservar espacio en la pila para guardar registros
     SRT X12, [sp, #40]        // guardar y en la pila
     STR X15, [sp, #32]        // guardar pintar_pixel en la pila
