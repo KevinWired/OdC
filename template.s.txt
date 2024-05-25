@@ -1,0 +1,129 @@
+// "CONSTANTES"
+.equ SCREEN_WIDTH,   640
+.equ SCREEN_HEIGH,   480
+.equ BITS_PER_PIXEL, 32
+
+.equ GPIO_BASE,    0x3f200000
+.equ GPIO_GPFSEL0, 0x00
+.equ GPIO_GPLEV0,  0x34
+
+
+
+
+
+
+
+
+
+
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Fun que guarda solo la dirección de retorno en el stack
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/*
+Fun: fun_name
+Hace: La función ....
+
+Parámetros:
+    Xa -> Sirve para ...
+    Xb -> Sirve para ...
+
+Asignación:
+    Xc -> Sirve para ...
+*/
+
+fun_name:
+	// Reserva espacio en el stack y guarda la dir de retorno en el stack
+	SUB SP, SP, #8
+	STUR LR, [SP, #0]
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+	// ******************************************************
+	// *************** Código de la fun_name ****************
+	// ******************************************************
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	// Carga la dirección de retorno y libera la memoria del stack
+	LDUR LR, [SP, #0]
+	ADD SP, SP, #8
+ret
+
+
+
+
+
+
+
+
+
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Fun que guarda los valores de las variables antes de realizar asignaciones en esta,
+// y les devuelve el valor anterior
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/*
+Ejemplo:
+	SUB SP, SP, #24
+	STUR LR, [SP, #16]
+	STUR X0, [SP, #8]
+	STUR X1, [SP, #0]
+
+	/*
+	**********************
+	** Código de la fun **
+	**********************
+	*/
+
+	LDR X1, [SP, #0]
+	LDR X0, [SP, #8]
+	LDR x30, [SP, #16]
+	ADD SP, SP, #24
+*/
+
+/*
+Fun: fun_name
+Hace: La función ....
+
+Parámetros:
+    Xa -> Sirve para ...
+    Xb -> Sirve para ...
+
+Asignación:
+    Xc -> Sirve para ...
+*/
+
+fun_name:
+	// Reserva espacio en el stack, guarda las variables que queremos conservar y la dir de retorno en el stack
+	SUB SP, SP, #(N * 8) // N son la cantidad de valores que deseamos guardar
+	STUR LR, [SP, #(N * 8)]
+	STUR Xa, [SP, #((N - 1) * 8)]
+	// ..................
+	STUR Xn, [SP, #0]
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+	// ******************************************************
+	// *************** Código de la fun_name ****************
+	// ******************************************************
+
+
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	// Carga la dirección de retorno, devuelve los valores previos de las variables usadas y libera la memoria del stack
+	LDR Xn, [SP, #0]
+	// ..................
+	LDR Xa, [SP,  #((N - 1) * 8)]
+	LDR LR, [SP, #(N * 8)]
+	ADD SP, SP,  #(N * 8) // N son la cantidad de valores que deseamos guardar
+ret
