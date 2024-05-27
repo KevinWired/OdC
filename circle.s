@@ -9,13 +9,13 @@
 *    Fun: circulo_h
 *    Hace: Dibuja un circulo de radio r centrado en (x0, y0)
 *	 Idea: Las circunferencias son simetricas respecto de los ejes x, y de las lineas y=x, y=-x. 
-	 De modo que basta dibujar los puntos de la circunferencia en su primer octante, el resto de puntos se calculan por simetria.
-	 
+*	 De modo que basta dibujar los puntos de la circunferencia en su primer octante, el resto de puntos se calculan por simetria.
+*	 
 *    Parametros:
-*        X0 (registro 0): Centro X del circulo
-*        X1 (registro 1): Centro Y del circulo
-*        X2 (registro 2): Radio
-*        X3 (registro 3): Color
+*    --> X0 (registro 0): Centro X del circulo
+*    --> X1 (registro 1): Centro Y del circulo
+*    --> X2 (registro 2): Radio
+*    --> X3 (registro 3): Color
 *        
 *   -- Total Var/Registros = 4 --
 *   -- Espacio a Reservar en el Stack => 4 * 8 = 32 -- 
@@ -30,7 +30,7 @@ circulo_h:
 	STUR X3, [SP, #24]
 	STUR LR, [SP, #32]
 
-	// código de la función
+	// código de la función 
 	MOV X4, X0	// X4 = centro = X0 (x)
 	MOV X5, X1	// X5 = centro = X1 (y)
 	MOV X6, X2	// X6 = radio = X2 
@@ -47,7 +47,7 @@ circle_loop:
 	// dibujar los 8 puntos simetricos con draw_circle_points
 	BL draw_circle_points 
 	
-	// actualizar P y y
+	// actualizar P & y
 	ADD X3, X0, #1 // x + 1
 	ADD X4, X2, #1 // P + x + 1
 	ADD X4, X4, X3 // P + 2x + 1
@@ -72,7 +72,6 @@ skip_y:
 	LDUR X3, [SP, #24]
 	LDUR LR, [SP, #32]  
 	ADD SP, SP, #32
-	RET
 
 // función para dibujar los puntos en cada octante del circulo
 draw_circle_points:

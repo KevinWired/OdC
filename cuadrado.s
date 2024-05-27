@@ -1,57 +1,52 @@
-.ifndef linea_recta_h
-.equ linea_recta_h, 0
+.ifndef cuadrado
+.equ cuadrado, 0
 
 .include "data.s"
-.include "funs/pintar_pixel.s"
-
 
 /*
-    Fun: linea_recta_h
-    Hace: Dadas una par de coordenadas (x1, y1) y un punto x2, dibuja una linea horizontal hasta X2
+Fun: cuadrado
+Hace: Dada una coordenada (x, y) y una distancia d, pinta un cuadrado que comienza en la coordenada (x, y) y finaliza en (x + d, y + d)
 
-    Parámetros:
-        X1 -> coordenada x1		=>		x1
-        X2 -> coordenada y1		=>		y1
-        X3 -> coordenada x2		=>		x2
-        X4 -> color
+Parámetros:
+    X1 -> Posición del pixel x1
+    X2 -> Posición del pixel y1
+    X3 -> Distancia
+    X4 -> Color
 */
 
-.globl linea_recta_h
-linea_recta_h:
+.globl cuadrado
+cuadrado:
 	// Reserva espacio en el stack, guarda las variables que queremos conservar y la dir de retorno en el stack
 	SUB SP, SP, #32
-	STUR X1, [SP, #0]
-	STUR X3, [SP, #8]
-	STUR X4, [SP, #16]
+	STUR X3, [SP, #0]
+	STUR X5, [SP, #8]
+	STUR X9, [SP, #16]
 	STUR LR, [SP, #24]
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // swap(X3, X4)
-    MOV X3, X4              // X3 = color
-    LDUR X4, [SP, #8]       // X4 = coordenada x2
 
-    loop_linea_recta_h:
-        // Si coordenada x1 <= x2 continua el loop
-        CMP X1, X4
-        B.HI end_linea_recta_h
+    // X9 almacena la distancia que debo sumar, X5 amacena el color
+    MOV X9, X3
+    MOV X5, X4
 
-        BL pintar_pixel
+    // Coordenada (x + d, y + d) == (x2, y2)
+	ADD X3, X1, X9
+	ADD X4, X2, X9
 
-        ADD X1, X1, #1
-        B loop_linea_recta_h
-    end_linea_recta_h:
+	BL rectangulo
 
+    // Restableciendo el valor de X4
+    MOV X4, X5
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	// Carga la dirección de retorno, devuelve los valores previos de las variables usadas y libera la memoria del stack
-	LDUR X1, [SP, #0]
-	LDUR X3, [SP, #8]
-	LDUR X4, [SP, #16]
+	LDUR X3, [SP, #0]
+	LDUR X5, [SP, #8]
+	LDUR X9, [SP, #16]
 	LDUR LR, [SP, #24]
 	ADD SP, SP, #32
 ret
-
 
 .endif

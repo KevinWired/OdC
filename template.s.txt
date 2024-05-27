@@ -1,14 +1,13 @@
-// "CONSTANTES"
-.equ SCREEN_WIDTH,   640
-.equ SCREEN_HEIGH,   480
-.equ BITS_PER_PIXEL, 32
+.ifndef fun_name
+.equ fun_name, 0
 
-.equ GPIO_BASE,    0x3f200000
-.equ GPIO_GPFSEL0, 0x00
-.equ GPIO_GPLEV0,  0x34
+.include "data.s"
 
+.globl fun_name
 
+// Aquí va alguna función de abajo
 
+.endif
 
 
 
@@ -84,7 +83,7 @@ Ejemplo:
 
 	LDR X1, [SP, #0]
 	LDR X0, [SP, #8]
-	LDR x30, [SP, #16]
+	LDR LR, [SP, #16]
 	ADD SP, SP, #24
 */
 
@@ -127,3 +126,5 @@ fun_name:
 	LDR LR, [SP, #(N * 8)]
 	ADD SP, SP,  #(N * 8) // N son la cantidad de valores que deseamos guardar
 ret
+
+.endif

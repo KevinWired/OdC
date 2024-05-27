@@ -1,5 +1,7 @@
-	.equ SCREEN_WIDTH,   640
-	.equ SCREEN_HEIGH,   480
+.ifndef reset_bg
+.equ reset_bg, 0
+
+.include "data.s"
 
 /*
 Fun: reset_bg
@@ -7,6 +9,7 @@ Hace: Pinta toda la pantalla de negro
 
 */
 
+.globl reset_bg
 reset_bg:
 	// Reserva espacio en el stack y guarda la dir de retorno en el stack
     SUB SP, SP, #8
@@ -48,3 +51,5 @@ reset_bg:
     LDUR LR, [SP, #0]
     ADD SP, SP, #8
 ret
+
+.endif
